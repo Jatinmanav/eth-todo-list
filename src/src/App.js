@@ -30,7 +30,10 @@ const useStyles = makeStyles(theme => ({
   button: {
     padding: "15px",
     marginTop: theme.spacing(5),
-    backgroundColor: "#eee"
+    backgroundColor: "#eee",
+    [theme.breakpoints.up("xs")]: {
+      maxHeight: theme.spacing(15)
+    }
   },
   list: {
     width: "100%",
@@ -38,22 +41,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: "5%"
   }
 }));
-
-function ListItems({ content, taskCount, taskNum }) {
-  return (
-    <Fragment>
-      <ListItem>
-        <ListItemIcon>
-          <CancelIcon />
-        </ListItemIcon>
-        <ListItemText primary={content} />
-      </ListItem>
-      {taskNum === taskCount ? null : (
-        <Divider variant="fullWidth" component="li" />
-      )}
-    </Fragment>
-  );
-}
 
 function App() {
   const [account, setAccount] = useState(null);
@@ -80,6 +67,17 @@ function App() {
 
   const handleChange = e => {
     setNewTask(e.target.value);
+  };
+
+  const handleComplete = (index, id) => {
+    console.log(index, id);
+    contract.methods
+      .completeTask(id)
+      .send({ from: account })
+      .once("receipt", receipt => {
+        setAccount(null);
+      });
+    setTasks([...tasks, (tasks[index].completed = true)]);
   };
 
   const handleSumbit = async e => {
@@ -134,12 +132,22 @@ function App() {
               <List className={classes.list}>
                 {tasks.map(x =>
                   x.completed ? null : (
-                    <ListItems
-                      key={x.id}
-                      content={x.content}
-                      taskNum={tasks.indexOf(x) + 1}
-                      taskCount={tasks.length}
-                    />
+                    <Fragment key={x.id}>
+                      <ListItem>
+                        <ListItemIcon>
+                          <CancelIcon
+                            name={"test"}
+                            onClick={() =>
+                              handleComplete(tasks.indexOf(x), x.id)
+                            }
+                          />
+                        </ListItemIcon>
+                        <ListItemText primary={x.content} />
+                      </ListItem>
+                      {tasks.indexOf(x) + 1 === tasks.length ? null : (
+                        <Divider variant="fullWidth" component="li" />
+                      )}
+                    </Fragment>
                   )
                 )}
               </List>

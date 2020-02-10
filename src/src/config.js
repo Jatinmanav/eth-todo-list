@@ -1,4 +1,4 @@
-export const address = "0x86BA083fb3C26A15e6e6EB1D0DdB8b852a9E357F";
+export const address = "0xdB5e8c5b89200203cE1025512ca15B79Fa7b2151";
 
 export const abi = [
   {
@@ -6,6 +6,50 @@ export const abi = [
     payable: false,
     stateMutability: "nonpayable",
     type: "constructor"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256"
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "completed",
+        type: "bool"
+      }
+    ],
+    name: "taskCompleted",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256"
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "content",
+        type: "string"
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "comleted",
+        type: "bool"
+      }
+    ],
+    name: "taskCreated",
+    type: "event"
   },
   {
     constant: true,
@@ -63,6 +107,21 @@ export const abi = [
       }
     ],
     name: "createTask",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256"
+      }
+    ],
+    name: "completeTask",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
