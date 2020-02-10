@@ -8,7 +8,6 @@ import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CancelIcon from "@material-ui/icons/Cancel";
-import "./App.css";
 import { abi, address } from "./config";
 import {
   Grid,
