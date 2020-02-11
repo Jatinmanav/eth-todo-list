@@ -7,7 +7,6 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import CancelIcon from "@material-ui/icons/Cancel";
 import { abi, address } from "./config";
 import {
   Grid,
@@ -34,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("xs")]: {
       maxHeight: theme.spacing(15)
     }
+  },
+  doneButton: {
+    marginRight: "15px"
   },
   list: {
     width: "100%",
@@ -130,26 +132,31 @@ function App() {
             </Grid>
             <Grid item xs={12}>
               <List className={classes.list}>
-                {tasks.map(x =>
-                  x.completed ? null : (
-                    <Fragment key={x.id}>
-                      <ListItem>
-                        <ListItemIcon>
-                          <CancelIcon
-                            name={"test"}
-                            onClick={() =>
-                              handleComplete(tasks.indexOf(x), x.id)
-                            }
-                          />
-                        </ListItemIcon>
+                {tasks.map(x => (
+                  <Fragment key={x.id}>
+                    <ListItem>
+                      <ListItemIcon>
+                        <Button
+                          color="primary"
+                          onClick={() => handleComplete(tasks.indexOf(x), x.id)}
+                          variant="contained"
+                          size="medium"
+                          className={classes.doneButton}
+                        >
+                          {x.completed ? "UNDO" : "DONE"}
+                        </Button>
+                      </ListItemIcon>
+                      {x.completed ? (
+                        <ListItemText primary={<del>{x.content}</del>} />
+                      ) : (
                         <ListItemText primary={x.content} />
-                      </ListItem>
-                      {tasks.indexOf(x) + 1 === tasks.length ? null : (
-                        <Divider variant="fullWidth" component="li" />
                       )}
-                    </Fragment>
-                  )
-                )}
+                    </ListItem>
+                    {tasks.indexOf(x) + 1 === tasks.length ? null : (
+                      <Divider variant="fullWidth" component="li" />
+                    )}
+                  </Fragment>
+                ))}
               </List>
             </Grid>
           </Grid>
