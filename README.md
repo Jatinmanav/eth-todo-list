@@ -1,5 +1,7 @@
 # Ethereum Based Todo List
 
+![Screenshot](https://github.com/Jatinmanav/eth-todo-list/blob/master/img/eth-todo-list.png)
+
 # Software Requirements
 
 - [Ganache](https://www.trufflesuite.com/ganache "Ganache") - A development framework for Ethereum smart contracts
